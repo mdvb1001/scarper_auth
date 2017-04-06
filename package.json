@@ -1,0 +1,24 @@
+{
+  "name": "scraper_auth",
+  "version": "1.0.0",
+  "description": "testing scrapers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdvb1001/scraper_auth.git"
+  },
+  "author": "Max Van Bel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdvb1001/scraper_auth/issues"
+  },
+  "homepage": "https://github.com/mdvb1001/scraper_auth#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.15.2",
+    "request": "^2.81.0"
+  }
+}
