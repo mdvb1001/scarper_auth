@@ -4,7 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var app = express();
 app.get('/scrape', function (req, res) {
-    url = 'http://www.imdb.com/title/tt1229340/';
+    url = 'http://www.imdb.com/title/tt1229340/?ref_=fn_al_tt_1';
     request(url, function (error, response, html) {
         if (!error) {
             var $ = cheerio.load(html);
@@ -14,18 +14,25 @@ app.get('/scrape', function (req, res) {
                 release: "",
                 rating: ""
             };
-            $('.header').filter(function () {
+            $('.title_wrapper').filter(function () {
                 var data = $(this);
                 title = data.children().first().text();
-                release = data.children().last().children().text();
                 json.title = title;
+                console.log(json.title);
+            });
+
+            $('.subtext').filter(function () {
+                var data = $(this);
+                release = data.children().last().text();
+                console.log(release);
                 json.release = release;
-            })
-            $('.star-box-giga-star').filter(function () {
+            });
+
+            $('.ratingValue').filter(function () {
                 var data = $(this);
                 rating = data.text();
                 json.rating = rating;
-            })
+            });
         }
         // To write to the system we will use the built in 'fs' library.
         // In this example we will pass 3 parameters to the writeFile function
@@ -36,7 +43,7 @@ app.get('/scrape', function (req, res) {
                 console.log('File successfully written! - Check your project directory for the output.json file');
             })
             // Finally, we'll just send out a message to the browser reminding you that this app does not have a UI.
-        res.send('Check your console!')
+        res.send(json);
     });
 })
 app.listen('8081');
