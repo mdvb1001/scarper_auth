@@ -3,9 +3,18 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var app = express();
+
+// Set Request defaults...
+reqs = request.defaults({
+  jar: true,                 // save cookies to jar
+  rejectUnauthorized: false,
+  followAllRedirects: true   // allow redirections
+});
+console.log(reqs);
+
 app.get('/scrape', function (req, res) {
     url = 'http://www.imdb.com/title/tt1229340/?ref_=fn_al_tt_1';
-    request(url, function (error, response, html) {
+    reqs(url, function (error, response, html) {
         if (!error) {
             var $ = cheerio.load(html);
             var title, release, rating;
@@ -30,6 +39,7 @@ app.get('/scrape', function (req, res) {
                 var data = $(this);
                 rating = data.text();
                 json.rating = rating;
+                console.log(json.rating);
             });
         }
         // To write to the system we will use the built in 'fs' library.
