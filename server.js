@@ -17,11 +17,12 @@ app.get('/scrape', function (req, res) {
     reqs(url, function (error, response, html) {
         if (!error) {
             var $ = cheerio.load(html);
-            var title, release, rating;
+            var title, release, rating, summary;
             var json = {
                 title: "",
                 release: "",
-                rating: ""
+                rating: "",
+                summary: "",
             };
             $('.title_wrapper').filter(function () {
                 var data = $(this);
@@ -32,14 +33,20 @@ app.get('/scrape', function (req, res) {
             $('.subtext').filter(function () {
                 var data = $(this);
                 release = data.children().last().text();
-                console.log(release);
                 json.release = release;
+                console.log(json.release);
             });
             $('.ratingValue').filter(function () {
                 var data = $(this);
                 rating = data.text();
                 json.rating = rating;
                 console.log(json.rating);
+            });
+            $('.plot_summary').filter(function () {
+                var data = $(this);
+                summary = data.children().first().text();
+                json.summary = summary;
+                console.log(json.summary);
             });
         }
         // To write to the system we will use the built in 'fs' library.
