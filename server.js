@@ -2,6 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
+var path = require('path');
 var app = express();
 
 // Set Request defaults...
@@ -65,7 +66,11 @@ app.get('/scrape', function (req, res) {
         });
         // Finally, we'll just send out a message to the browser reminding you
         // that this app does not have a UI.
-        res.send(json);
+
+        // document.getElementById("data").innerHTML = txt;
+
+        res.sendFile(path.join(__dirname, "index.html"));
+        // res.send(json);
     });
 });
 app.listen('8081');
