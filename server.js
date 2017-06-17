@@ -69,8 +69,8 @@ app.get('/scrape', function (req, res) {
 
         // document.getElementById("data").innerHTML = txt;
 
-        res.sendFile(path.join(__dirname, "index.html"));
-        // res.send(json);
+        // res.sendFile(path.join(__dirname, "index.html"));
+        res.send(json);
     });
 });
 app.listen('8081');
